@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useUIStore } from "@/lib/store/ui-store";
+import { usePreferencesStore } from "@/lib/preferences";
 import { useLearnerStore } from "@/lib/store/learner-store";
 import { cn } from "@/lib/utils/cn";
 import type { NeurodivergentTrait } from "@/lib/models";
@@ -98,8 +99,8 @@ export default function AccessibilitySettingsPage() {
     updateTraits(next);
   };
 
-  const dyslexiaFont = useUIStore((s) => s.dyslexiaFont);
-  const setDyslexiaFont = useUIStore((s) => s.setDyslexiaFont);
+  const dyslexiaFont = usePreferencesStore((s) => s.fontFamily === "dyslexia-friendly");
+  const setPreference = usePreferencesStore((s) => s.setPreference);
   const calmReaderMode = useUIStore((s) => s.calmReaderMode);
   const setCalmReaderMode = useUIStore((s) => s.setCalmReaderMode);
   const highContrastMode = useUIStore((s) => s.highContrastMode);
@@ -157,7 +158,11 @@ export default function AccessibilitySettingsPage() {
               <p id="toggle-dyslexia-font-label" className="text-sm font-semibold text-foreground">Dyslexia-Friendly Font</p>
               <p className="text-xs text-muted-foreground">Switch to OpenDyslexic</p>
             </div>
-            <Toggle checked={dyslexiaFont} onToggle={() => setDyslexiaFont(!dyslexiaFont)} labelledBy="toggle-dyslexia-font-label" />
+            <Toggle
+              checked={dyslexiaFont}
+              onToggle={() => setPreference("fontFamily", dyslexiaFont ? "default" : "dyslexia-friendly")}
+              labelledBy="toggle-dyslexia-font-label"
+            />
           </div>
 
           <div className="flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3">

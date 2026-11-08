@@ -13,14 +13,15 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { useUIStore } from "@/lib/store/ui-store";
+import { usePreferencesStore } from "@/lib/preferences";
 import Link from "next/link";
 
 export function AccessibilityToolbar() {
   const [open, setOpen] = useState(false);
   const launcherRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
-  const dyslexiaFont = useUIStore((s) => s.dyslexiaFont);
-  const setDyslexiaFont = useUIStore((s) => s.setDyslexiaFont);
+  const dyslexiaFont = usePreferencesStore((s) => s.fontFamily === "dyslexia-friendly");
+  const setPreference = usePreferencesStore((s) => s.setPreference);
   const calmReaderMode = useUIStore((s) => s.calmReaderMode);
   const setCalmReaderMode = useUIStore((s) => s.setCalmReaderMode);
   const highContrastMode = useUIStore((s) => s.highContrastMode);
@@ -33,7 +34,8 @@ export function AccessibilityToolbar() {
       label: "Dyslexia Font",
       icon: Type,
       active: dyslexiaFont,
-      onClick: () => setDyslexiaFont(!dyslexiaFont),
+      onClick: () =>
+        setPreference("fontFamily", dyslexiaFont ? "default" : "dyslexia-friendly"),
     },
     {
       label: "High Contrast",

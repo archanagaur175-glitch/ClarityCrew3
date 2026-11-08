@@ -10,6 +10,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { SUBJECTS, QUIZZES, FLASHCARD_DECKS, VIDEOS } from "@/data";
+import { AccessibilityToolbar } from "@/components/a11y/accessibility-toolbar";
 
 const FEATURES = [
   {
@@ -356,6 +357,7 @@ export default function LandingPage() {
         <CTASection />
       </main>
       <Footer />
+      <AccessibilityToolbar />
     </div>
   );
 }
